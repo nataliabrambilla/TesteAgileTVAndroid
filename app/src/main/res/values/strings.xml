@@ -18,4 +18,7 @@
     <string name="xx">XX</string>
     <string name="weight_description">%s kg</string>
     <string name="height_description">%s m</string>
+    <string name="pokemon_list">Pokemon list</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="try_again">Try Again</string>
 </resources>
