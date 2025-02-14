@@ -2,4 +2,40 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!-- Cores primárias -->
+    <color name="md_theme_light_primary">#795548</color> <!-- Marrom médio -->
+    <color name="md_theme_light_onPrimary">#FFFFFF</color> <!-- Branco para contraste -->
+    <color name="md_theme_light_primaryContainer">#D7CCC8</color> <!-- Marrom claro -->
+    <color name="md_theme_light_onPrimaryContainer">#4E342E
+    </color> <!-- Marrom escuro para contraste -->
+
+    <!-- Cores secundárias -->
+    <color name="md_theme_light_secondary">#9E9E9E</color> <!-- Cinza médio -->
+    <color name="md_theme_light_onSecondary">#212121</color> <!-- Cinza escuro para contraste -->
+
+    <!-- Cores de fundo e superfície -->
+    <color name="md_theme_light_background">#FAFAFA</color> <!-- Cinza muito claro para o fundo -->
+    <color name="md_theme_light_onBackground">#212121</color> <!-- Cinza escuro para texto -->
+    <color name="md_theme_light_surface">#FFFFFF</color> <!-- Branco para superfícies -->
+    <color name="md_theme_light_onSurface">#424242</color> <!-- Cinza médio para texto -->
+
+
+    <!-- Cores primárias -->
+    <color name="md_theme_dark_primary">#5D4037</color> <!-- Marrom escuro -->
+    <color name="md_theme_dark_onPrimary">#D7CCC8</color> <!-- Marrom claro para contraste -->
+    <color name="md_theme_dark_primaryContainer">#3E2723
+    </color> <!-- Marrom muito escuro para containers -->
+    <color name="md_theme_dark_onPrimaryContainer">#D7CCC8
+    </color> <!-- Marrom claro para texto sobre o container -->
+
+    <!-- Cores secundárias -->
+    <color name="md_theme_dark_secondary">#757575</color> <!-- Cinza médio -->
+    <color name="md_theme_dark_onSecondary">#E0E0E0</color> <!-- Cinza claro para contraste -->
+
+    <!-- Cores de fundo e superfície -->
+    <color name="md_theme_dark_background">#121212</color> <!-- Preto suave para o fundo -->
+    <color name="md_theme_dark_onBackground">#E0E0E0</color> <!-- Cinza claro para texto -->
+    <color name="md_theme_dark_surface">#1E1E1E</color> <!-- Cinza escuro para superfícies -->
+    <color name="md_theme_dark_onSurface">#FFFFFF
+    </color> <!-- Branco para texto sobre superfícies -->
 </resources>

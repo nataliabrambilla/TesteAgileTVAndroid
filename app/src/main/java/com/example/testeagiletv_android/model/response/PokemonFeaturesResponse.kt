@@ -1,8 +1,8 @@
-package com.example.testeagiletv_android.model
+package com.example.testeagiletv_android.model.response
 
 import com.google.gson.annotations.SerializedName
 
-data class PokemonFeaturesResult(
+data class PokemonFeaturesResponse(
     val abilities: List<Abilities>,
     @SerializedName("base_experience")
     val baseExperience: Int,
@@ -78,7 +78,7 @@ data class Move(
 
 data class VersionGroupDetails(
     @SerializedName("level_learned_at")
-    val levelLearnedAt: Long,
+    val levelLearnedAt: Int,
     @SerializedName("move_learn_method")
     val moveLearnMethod: MoveLearnMethod,
     @SerializedName("version_group")
@@ -491,8 +491,8 @@ data class Icons2(
 
 data class Stat(
     @SerializedName("base_stat")
-    val baseStat: Long,
-    val effort: Long,
+    val baseStat: Int,
+    val effort: Int,
     val stat: Stat2,
 )
 
@@ -502,7 +502,7 @@ data class Stat2(
 )
 
 data class Type(
-    val slot: Long,
+    val slot: Int,
     val type: Type2,
 )
 

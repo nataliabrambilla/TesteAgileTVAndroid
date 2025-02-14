@@ -1,19 +1,18 @@
 package com.example.testeagiletv_android.view
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.testeagiletv_android.databinding.ActivityMainBinding
-import com.example.testeagiletv_android.model.PokemonRepository
-import kotlinx.coroutines.launch
+import com.example.testeagiletv_android.viewModel.PokemonListViewModel
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var pokemonAdapter: PokemonAdapter
-    private lateinit var pokemonViewModel: PokemonViewModel
+    private lateinit var pokemonListViewModel: PokemonListViewModel
 
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -21,33 +20,44 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(binding.root)
-
-        pokemonViewModel = ViewModelProvider(this).get(PokemonViewModel::class.java)
-        pokemonViewModel.fetchPokemonList()
+        pokemonListViewModel = ViewModelProvider(this)[PokemonListViewModel::class.java]
         setupPokemonList()
         observePokemonList()
+        setUpListeners()
+    }
 
-        /*lifecycleScope.launch {
-            val result = pokemonRepository.getPokemonList().results
-            println("natalia: ${result[0].name}")
-        }*/
+    private fun setUpListeners() {
+        binding.rvPokemonList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
 
+                if (!binding.rvPokemonList.canScrollVertically(1)) {
+                    pokemonListViewModel.onReachEndOfPokemonsList()
+                }
+            }
+        })
     }
 
     private fun setupPokemonList() {
-        pokemonAdapter = PokemonAdapter(emptyList())
-        binding.rvPokemonList.layoutManager = LinearLayoutManager(this)
+        pokemonAdapter = PokemonAdapter(emptyList(), object : PokemonAdapter.PokemonListListener {
+            override fun onClickPokemon(name: String) {
+                navigateToPokemonDetails(name)
+            }
+        })
+        binding.rvPokemonList.layoutManager = GridLayoutManager(this, 2)
         binding.rvPokemonList.adapter = pokemonAdapter
     }
 
     private fun observePokemonList() {
-        pokemonViewModel.pokemonList.observe(this) { pokemonModel ->
-            val sortedPokemonList = pokemonModel.results.sortedBy {
-                it.name
-            }
-            pokemonAdapter.updatePokemonList(sortedPokemonList)
+        pokemonListViewModel.pokemonListName.observe(this) { pokemons ->
+            pokemonAdapter.updatePokemonList(pokemons)
         }
+    }
+
+    private fun navigateToPokemonDetails(pokemonName: String) {
+        val intent = Intent(this@MainActivity, PokemonDetailActivity::class.java)
+        intent.putExtra("POKEMON_NAME", pokemonName)
+        startActivity(intent)
     }
 }

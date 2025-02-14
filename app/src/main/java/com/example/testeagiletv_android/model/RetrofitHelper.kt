@@ -6,9 +6,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitHelper {
 
     companion object {
-
-     val pokemonApi = Retrofit.Builder()
-         .baseUrl("https://pokeapi.co/")
+        val pokemonApi = Retrofit.Builder()
+         .baseUrl("https://pokeapi.co/api/v2/")
          .addConverterFactory(GsonConverterFactory.create())
          .build()
          .create(PokemonService::class.java)

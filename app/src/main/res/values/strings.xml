@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Teste Agile TV - Android</string>
+    <string name="separator_description">"  |  "</string>
+    <string name="height">height</string>
+    <string name="pokemon_name">pokemon name</string>
+    <string name="type">type</string>
+    <string name="description">description</string>
+    <string name="weight">weight</string>
+    <string name="abilities">abilities</string>
+    <string name="ability">ability</string>
+    <string name="stats">stats</string>
+    <string name="health_points">Health points</string>
+    <string name="attack">Attack</string>
+    <string name="defense">Defense</string>
+    <string name="special_attack">Special attack</string>
+    <string name="special_defense">Special defense</string>
+    <string name="speed">Speed</string>
+    <string name="xx">XX</string>
+    <string name="weight_description">%s kg</string>
+    <string name="height_description">%s m</string>
 </resources>
