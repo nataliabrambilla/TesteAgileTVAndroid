@@ -16,8 +16,10 @@ class PokemonListViewModel : ViewModel() {
 
     private val pokemonRepository = PokemonRepository()
 
-    private val _pokemonListName = MutableLiveData<List<PokemonListUiModel>>()
-    val pokemonListName: LiveData<List<PokemonListUiModel>> = _pokemonListName
+    private var pokemonListSource = listOf<PokemonListUiModel>()
+
+    private val _pokemonListName = MutableLiveData<List<PokemonListUiModel>?>()
+    val pokemonListName: LiveData<List<PokemonListUiModel>?> = _pokemonListName
 
     init {
         fetchPokemonList()
@@ -41,13 +43,14 @@ class PokemonListViewModel : ViewModel() {
                     )
                 }
 
-                val newList = _pokemonListName.value.orEmpty() + uiModels
+                pokemonListSource = pokemonListSource + uiModels
 
-                _pokemonListName.postValue(newList)
+                _pokemonListName.postValue(pokemonListSource)
 
             } catch (e: Exception) {
-                println("Erro ao buscar lista de Pokémons: ${e.message}")
-                // tratar erro
+                if (page <= 0) {
+                    _pokemonListName.postValue(null)
+                }
             }
         }
     }
@@ -57,5 +60,10 @@ class PokemonListViewModel : ViewModel() {
         val matchResult = pattern.find(url)
         val id =  matchResult?.groupValues?.get(1)?.toIntOrNull() ?: return null
         return BASE_IMAGE_URL.format(id)
+    }
+
+    fun onTryAgainClick() {
+        page = 0
+        fetchPokemonList()
     }
 }

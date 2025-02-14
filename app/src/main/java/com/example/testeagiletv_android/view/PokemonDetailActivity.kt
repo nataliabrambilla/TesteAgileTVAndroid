@@ -1,6 +1,7 @@
 package com.example.testeagiletv_android.view
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.testeagiletv_android.R
@@ -23,6 +24,9 @@ class PokemonDetailActivity : AppCompatActivity() {
         pokemonDetailsViewModel = ViewModelProvider(this)[PokemonDetailViewModel::class.java]
         setUpObserver()
         fetchPokemonDetail()
+        binding.tvTryAgain.setOnClickListener {
+            pokemonDetailsViewModel.onTryAgainClick()
+        }
     }
 
     private fun fetchPokemonDetail() {
@@ -32,18 +36,26 @@ class PokemonDetailActivity : AppCompatActivity() {
 
     private fun setUpObserver() {
         pokemonDetailsViewModel.pokemonDetails.observe(this) {
-            Picasso.get().load(it.imageURL).into(binding.imagePokemonDetail)
-            binding.textNamePokemonDetail.text = it.name
-            bindPokemonTypes(it)
-            bindHeightDescription(it)
-            bindWeightDescription(it)
-            bindPokemonAbilities(it)
-            bindHp(it)
-            bindAttack(it)
-            bindDefense(it)
-            bindSpecialAttack(it)
-            bindSpecialDefense(it)
-            bindSpeed(it)
+            if (it == null) {
+                binding.sucessScreen.visibility = View.GONE
+                binding.errorScreen.visibility = View.VISIBLE
+            } else {
+                binding.sucessScreen.visibility = View.VISIBLE
+                binding.errorScreen.visibility = View.GONE
+
+                Picasso.get().load(it.imageURL).into(binding.imagePokemonDetail)
+                binding.textNamePokemonDetail.text = it.name
+                bindPokemonTypes(it)
+                bindHeightDescription(it)
+                bindWeightDescription(it)
+                bindPokemonAbilities(it)
+                bindHp(it)
+                bindAttack(it)
+                bindDefense(it)
+                bindSpecialAttack(it)
+                bindSpecialDefense(it)
+                bindSpeed(it)
+            }
         }
     }
 

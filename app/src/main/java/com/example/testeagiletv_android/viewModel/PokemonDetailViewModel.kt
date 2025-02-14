@@ -11,31 +11,41 @@ import kotlinx.coroutines.launch
 
 class PokemonDetailViewModel : ViewModel() {
 
+    private var pokemonName = ""
     private val pokemonRepository = PokemonRepository()
 
-    private val _pokemonDetails = MutableLiveData<PokemonDetailModel>()
-    val pokemonDetails: LiveData<PokemonDetailModel> = _pokemonDetails
+    private val _pokemonDetails = MutableLiveData<PokemonDetailModel?>()
+    val pokemonDetails: LiveData<PokemonDetailModel?> = _pokemonDetails
 
     fun fetchPokemonDetail(pokemonName: String) {
+        this.pokemonName = pokemonName
         viewModelScope.launch {
-            val resultPokemonDetail = pokemonRepository.getPokemonFeatures(pokemonName)
+            try {
+                val resultPokemonDetail = pokemonRepository.getPokemonFeatures(pokemonName)
 
-            val pokemonDetailUiModel = PokemonDetailModel(
-                name = resultPokemonDetail.name,
-                imageURL = resultPokemonDetail.sprites.other.officialArtwork.frontDefault,
-                types = resultPokemonDetail.types.map { it.type.name },
-                height = resultPokemonDetail.height,
-                weight = resultPokemonDetail.weight,
-                abilities = resultPokemonDetail.abilities.map { it.ability.name },
-                stats = resultPokemonDetail.stats.map { stat ->
-                    Stats(
-                        statNumber = stat.baseStat,
-                        statName = stat.stat.name,
-                    )
-                },
-            )
+                val pokemonDetailUiModel = PokemonDetailModel(
+                    name = resultPokemonDetail.name,
+                    imageURL = resultPokemonDetail.sprites.other.officialArtwork.frontDefault,
+                    types = resultPokemonDetail.types.map { it.type.name },
+                    height = resultPokemonDetail.height,
+                    weight = resultPokemonDetail.weight,
+                    abilities = resultPokemonDetail.abilities.map { it.ability.name },
+                    stats = resultPokemonDetail.stats.map { stat ->
+                        Stats(
+                            statNumber = stat.baseStat,
+                            statName = stat.stat.name,
+                        )
+                    },
+                )
+                _pokemonDetails.postValue(pokemonDetailUiModel)
 
-            _pokemonDetails.postValue(pokemonDetailUiModel)
+            } catch (e: Exception) {
+                _pokemonDetails.postValue(null)
+            }
         }
+    }
+
+    fun onTryAgainClick() {
+        fetchPokemonDetail(pokemonName)
     }
 }

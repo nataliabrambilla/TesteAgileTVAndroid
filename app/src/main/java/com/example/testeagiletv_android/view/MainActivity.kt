@@ -2,6 +2,7 @@ package com.example.testeagiletv_android.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -37,6 +38,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
+        binding.tvTryAgain.setOnClickListener {
+            pokemonListViewModel.onTryAgainClick()
+        }
     }
 
     private fun setupPokemonList() {
@@ -51,7 +56,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun observePokemonList() {
         pokemonListViewModel.pokemonListName.observe(this) { pokemons ->
-            pokemonAdapter.updatePokemonList(pokemons)
+
+            if (pokemons == null) {
+                binding.rvPokemonList.visibility = View.GONE
+                binding.errorScreen.visibility = View.VISIBLE
+            } else {
+                binding.rvPokemonList.visibility = View.VISIBLE
+                binding.errorScreen.visibility = View.GONE
+            }
+            pokemonAdapter.updatePokemonList(pokemons.orEmpty())
         }
     }
 
