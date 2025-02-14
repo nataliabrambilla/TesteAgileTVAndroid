@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        binding.tvTryAgain.setOnClickListener {
+        binding.errorScreen.textTryAgain.setOnClickListener {
             pokemonListViewModel.onTryAgainClick()
         }
     }
@@ -59,10 +59,10 @@ class MainActivity : AppCompatActivity() {
 
             if (pokemons == null) {
                 binding.rvPokemonList.visibility = View.GONE
-                binding.errorScreen.visibility = View.VISIBLE
+                binding.errorScreen.container.visibility = View.VISIBLE
             } else {
                 binding.rvPokemonList.visibility = View.VISIBLE
-                binding.errorScreen.visibility = View.GONE
+                binding.errorScreen.container.visibility = View.GONE
             }
             pokemonAdapter.updatePokemonList(pokemons.orEmpty())
         }

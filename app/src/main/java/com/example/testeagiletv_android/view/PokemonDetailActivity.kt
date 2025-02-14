@@ -24,7 +24,7 @@ class PokemonDetailActivity : AppCompatActivity() {
         pokemonDetailsViewModel = ViewModelProvider(this)[PokemonDetailViewModel::class.java]
         setUpObserver()
         fetchPokemonDetail()
-        binding.tvTryAgain.setOnClickListener {
+        binding.errorScreen.textTryAgain.setOnClickListener {
             pokemonDetailsViewModel.onTryAgainClick()
         }
     }
@@ -37,11 +37,11 @@ class PokemonDetailActivity : AppCompatActivity() {
     private fun setUpObserver() {
         pokemonDetailsViewModel.pokemonDetails.observe(this) {
             if (it == null) {
-                binding.sucessScreen.visibility = View.GONE
-                binding.errorScreen.visibility = View.VISIBLE
+                binding.successScreen.visibility = View.GONE
+                binding.errorScreen.container.visibility = View.VISIBLE
             } else {
-                binding.sucessScreen.visibility = View.VISIBLE
-                binding.errorScreen.visibility = View.GONE
+                binding.successScreen.visibility = View.VISIBLE
+                binding.errorScreen.container.visibility = View.GONE
 
                 Picasso.get().load(it.imageURL).into(binding.imagePokemonDetail)
                 binding.textNamePokemonDetail.text = it.name
